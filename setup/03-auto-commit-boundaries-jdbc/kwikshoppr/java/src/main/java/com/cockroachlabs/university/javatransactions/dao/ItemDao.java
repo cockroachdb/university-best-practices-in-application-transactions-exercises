@@ -1,5 +1,6 @@
 package com.cockroachlabs.university.javatransactions.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlBatch;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
+import org.jdbi.v3.sqlobject.transaction.Transaction;
 
 import com.cockroachlabs.university.javatransactions.domain.Item;
 
@@ -33,5 +35,12 @@ public interface ItemDao {
 
     @SqlUpdate("updateItemQuantity")
     int updateItemQuantity(@Bind("item_id") UUID itemId, @Bind("amount") int amount);
+
+    @Transaction
+    default void updateItemInventory(UUID itemId, int quantity) throws SQLException, InterruptedException {
+        findItemById(itemId);
+
+        updateItemQuantity(itemId, quantity);
+    }
 
 }

@@ -21,11 +21,8 @@ public class ItemInventoryServiceImpl implements ItemInventoryService {
     @Override
     public void updateItemInventory(UUID itemId, int quantity) throws SQLException, InterruptedException {
         
-        //Step 1: Use the ItemDao to find the item using the method parameter itemId.
-        itemDao.findItemById(itemId);
+        throw new UnsupportedOperationException("Unimplemented method 'updateItemInventory'");
 
-        //Step 2: Use the ItemDao to update the item quantity using the method parameter quantity
-        itemDao.updateItemQuantity(itemId, quantity);
     }
 
 }
